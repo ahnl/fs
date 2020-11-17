@@ -1,7 +1,7 @@
 import React from 'react'
 import personService from '../services/persons';
 
-const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setPersons}) => {
+const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setPersons, updateNotification}) => {
     const addNumber = (event) => {
       event.preventDefault();
       if (persons.filter(person => person.name === newName).length > 0) {
@@ -14,9 +14,10 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
 
         personService.create(newPerson)
         .then(response => {
-            setPersons(persons.concat(newPerson))
+            setPersons(persons.concat(response))
             setNewName('');
             setNewNumber('');
+            updateNotification(`Added ${newName}`, 'green')
         })
       }
     };

@@ -1,12 +1,13 @@
 import React from 'react';
 import personService from '../services/persons';
 
-const Persons = ({persons, filterValue, setPersons}) => {
+const Persons = ({persons, filterValue, setPersons, updateNotification}) => {
     const deletePerson = (id, name) => {
         if (window.confirm(`Delete ${name}?`)) {
             personService.delete(id).then(() => {
                 const copyPersons = persons.filter( person => person.id !== id);
                 setPersons(copyPersons)
+                updateNotification(`Deleted ${name}`, 'red')
             })
         }
     }
