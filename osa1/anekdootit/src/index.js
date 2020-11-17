@@ -9,17 +9,28 @@ const App = (props) => {
     tempPoints[selected] += 1;
     setPoints(tempPoints);
   }
+  console.log();
+  const maxPoints = Math.max.apply(Math, points);
   return (
-    <div>
-      {props.anecdotes[selected]}
-      <br />
-      <button onClick={() => vote()}>
-        vote {points[selected]}
-      </button>
-      <button onClick={() => setSelected(Math.floor(Math.random() * props.anecdotes.length))}>
-        next anecdote
-      </button>
-    </div>
+    <>
+      <div>
+        <h1>Anecdote of the day</h1>
+        {props.anecdotes[selected]}
+        <br />
+        <button onClick={() => vote()}>
+          vote {points[selected]}
+        </button>
+        <button onClick={() => setSelected(Math.floor(Math.random() * props.anecdotes.length))}>
+          next anecdote
+        </button>
+      </div>
+      <div>
+        <h1>Anecdote with most votes</h1>
+        {props.anecdotes[points.indexOf(maxPoints)]}
+        <br />
+        has {maxPoints} votes
+      </div>
+    </>
   )
 }
 
