@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom'
 
 const StatisticLine = (props) => {
   return (
-    <div>
-      {props.text} {props.value} {(props.unit ? props.unit : '')}
-    </div>
+    <tr>
+      <td>
+        {props.text}
+      </td>
+      <td>
+        {props.value} {(props.unit ? props.unit : '')}
+      </td>
+    </tr>
   )
 };
 const Statistics = ({good, neutral, bad}) => {
@@ -13,11 +18,15 @@ const Statistics = ({good, neutral, bad}) => {
     return (
       <>
         <h1>statistics</h1>
-        <StatisticLine text="good" value={good} />
-        <StatisticLine text="neutral" value={neutral} />
-        <StatisticLine text="bad" value={bad} />
-        <StatisticLine text="average" value={(good + neutral + bad) / 3} />
-        <StatisticLine text="positive" value={((good) / (good + neutral + bad) * 100)} unit="%" />
+        <table>
+          <tbody>
+            <StatisticLine text="good" value={good} />
+            <StatisticLine text="neutral" value={neutral} />
+            <StatisticLine text="bad" value={bad} />
+            <StatisticLine text="average" value={(good + neutral + bad) / 3} />
+            <StatisticLine text="positive" value={((good) / (good + neutral + bad) * 100)} unit="%" />
+          </tbody>
+        </table>
       </>
     );
   } else {
