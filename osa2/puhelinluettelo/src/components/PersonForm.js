@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setPersons}) => {
     const addNumber = (event) => {
@@ -6,12 +7,18 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
       if (persons.filter(person => person.name === newName).length > 0) {
         alert(`${newName} is already added to phonebook`);
       } else {
-        setPersons(persons.concat({
-          name: newName,
-          number: newNumber
-        }))
-        setNewName('');
-        setNewNumber('');
+        const newPerson = {
+            name: newName,
+            number: newNumber
+        };
+
+        axios
+        .post('http://localhost:3001/persons', newPerson)
+        .then(response => {
+            setPersons(persons.concat(newPerson))
+            setNewName('');
+            setNewNumber('');
+        })
       }
     };
     return (
