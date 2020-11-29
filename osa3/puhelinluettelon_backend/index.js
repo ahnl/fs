@@ -30,13 +30,21 @@ app.get('/api/persons', (req, res) => {
 });
 
 app.post('/api/persons', (req, res) => {
-  persons.push({
-    name: req.body.name, 
-    number: req.body.number, 
-    id: Math.floor(Math.random() * 1000000)
-  })
-
-  res.status(201).end();
+  if (req.body.name && req.body.number) {
+      if (persons.filter(p => p.name == req.body.name).length == 0) {
+        persons.push({
+          name: req.body.name, 
+          number: req.body.number, 
+          id: Math.floor(Math.random() * 1000000)
+        })
+      
+        res.status(201).end();
+      } else {
+        res.status(400).json({ error: 'name must be unique' });
+      }
+  } else {
+    res.status(400).json({error: 'required parameters not present'});
+  }
 });
 
 app.get('/api/persons/:id', (req, res) => {
