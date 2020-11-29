@@ -83,4 +83,4 @@ app.get('/info', (req, res) => {
   ${new Date()}`);
 })
 
-app.listen(3001);
+app.listen((process.env.PORT || 3001));
