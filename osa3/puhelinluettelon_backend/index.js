@@ -1,7 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 morgan.token('post', function getId (req) {
@@ -44,13 +46,13 @@ app.get('/api/persons', (req, res) => {
 app.post('/api/persons', (req, res) => {
   if (req.body.name && req.body.number) {
       if (persons.filter(p => p.name == req.body.name).length == 0) {
-        persons.push({
+        const person = {
           name: req.body.name, 
           number: req.body.number, 
           id: Math.floor(Math.random() * 1000000)
-        })
-      
-        res.status(201).end();
+        };
+        persons.push(person)
+        res.status(201).json(person);
       } else {
         res.status(400).json({ error: 'name must be unique' });
       }
